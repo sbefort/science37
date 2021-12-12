@@ -36,7 +36,9 @@ function App() {
             </Card>
           </Section>
           <Section>
-            hashtags go here
+            <Card>
+              <h1>hash tags</h1>
+            </Card>
           </Section>
         </SplitScreen>
       </div>

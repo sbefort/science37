@@ -7,10 +7,8 @@ const Card = ({ children }) => (
 );
 
 const StyledCard = styled.div`
-  box-shadow: 10px 8px 10px gray, -10px 8px 15px gray, 10px 8px 15px gray;
-
   border-top: 1px solid #ccc;
-  padding: 10px;
+  padding: 1em;
   box-shadow: 1px 1px 7px rgba(0,0,0,0.1), -1px 1px 7px rgba(0,0,0,0.1);
 `;
 
