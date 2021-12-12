@@ -15,6 +15,7 @@ export const GlobalStyles = createGlobalStyle`
     transition: all 0.25s linear;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
+    padding 0 20px;
   }
 
   #root-container {
@@ -25,7 +26,12 @@ export const GlobalStyles = createGlobalStyle`
 
   @media (max-width: 800px) {
     body {
-      font-size: 0.9rem;
+      padding: 0;
+      font-size: 0.9em;
+    }
+
+    header {
+      padding: 0 1em;
     }
   }
 `;
