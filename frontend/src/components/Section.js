@@ -1,8 +1,8 @@
 const defaultStyles = {
   marginTop: '0',
-  marginRight: '20px',
+  marginRight: '10px',
   marginBottom: '20px',
-  paddingLeft: '20px',
+  marginLeft: '10px',
 };
 
 const Section = ({ styles, children }) => (
