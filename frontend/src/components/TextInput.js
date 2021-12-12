@@ -6,11 +6,12 @@ const defaultStyles = {
   paddingLeft: '8px',
 };
 
-const TextInput = ({ type = 'text', placeholder = '', onChange, styles }) => (
+const TextInput = ({ type = 'text', placeholder = '', onChange, value, styles }) => (
   <StyledTextInput
     type={type}
     placeholder={placeholder}
     onChange={onChange}
+    value={value}
     style={{
       ...defaultStyles,
       ...styles
@@ -22,7 +23,7 @@ const StyledTextInput = styled.input`
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 100%;
-  font-size: 15px;
+  font-size: 0.9em;
 `;
 
 export default TextInput;

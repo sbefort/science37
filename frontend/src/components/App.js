@@ -14,8 +14,8 @@ const params = new URLSearchParams(window.location.search);
 const theme = params.get('theme') === 'dark' ? darkTheme : lightTheme;
 
 function App() {
-  const data = useTwitterProxy('/api/v1/proxy');
   const [searchTerm, setSearchTerm] = useState('');
+  const data = useTwitterProxy(searchTerm);
   console.log(data);
   return (
     <ThemeProvider theme={theme}>
@@ -27,6 +27,7 @@ function App() {
             <TextInputWithIcon
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by keyword"
+              value={searchTerm}
               iconComponent={<IoSearchSharp color="#ccc" fontSize="1.5em" />}
             />
           </MasonryItem>
