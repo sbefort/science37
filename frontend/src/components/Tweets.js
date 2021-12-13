@@ -11,8 +11,8 @@ const Tweets = ({ tweets, selectedHashtag, onHashtagClick }) => {
 
   return (
     <>
-      {filterTweets(tweets, selectedHashtag).map((tweet) => (
-        <Tweet key={tweet.id} tweet={tweet} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick} />
+      {filterTweets(tweets, selectedHashtag).map((tweet, i) => (
+        <Tweet isEven={i % 2 === 0} key={tweet.id} tweet={tweet} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick} />
       ))}
     </>
   );

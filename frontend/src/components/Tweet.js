@@ -4,9 +4,9 @@ import Avatar from './Avatar';
 import H3 from './H3';
 import Chip from './Chip';
 
-const Tweet = ({ tweet, selectedHashtag, onHashtagClick }) => {
+const Tweet = ({ tweet, selectedHashtag, onHashtagClick, isEven }) => {
   return (
-    <StyledTweet>
+    <StyledTweet isEven={isEven}>
       <div className="avatar">
         <Avatar src={tweet.user.profile_image_url_https} alt={tweet.user.screen_name} />
       </div>
@@ -22,8 +22,9 @@ const Tweet = ({ tweet, selectedHashtag, onHashtagClick }) => {
 };
 
 const StyledTweet = styled.div`
-  padding: 20px 0;
+  padding: 20px 12px 12px 15px;
   display: flex;
+  background-color: ${props => props.isEven ? '#fff' : '#f8f9f9'}};
 
   .avatar {
     margin-right: 15px;

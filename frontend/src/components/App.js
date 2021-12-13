@@ -72,7 +72,7 @@ function App() {
         </MasonryItem>
       </header>
       <MasonryItem width="30%" floatDirection="right">
-        <Card>
+        <Card styles={{padding: '1em'}}>
           <H2>Filter by hashtag</H2>
           {hashtags && hashtags.map((hashtag) => (
             <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={hashtag}>#{ hashtag }</Chip>
