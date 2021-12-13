@@ -37,7 +37,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   @media (max-width: 800px) {
-    body {
+    html, body {
       padding: 0;
       font-size: 0.9em;
     }
