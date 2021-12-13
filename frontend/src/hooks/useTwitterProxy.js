@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import debounce from 'lodash/debounce';
 
-const debounced = debounce(axios.get, 250);
-
-const useTwitterProxy = (searchTerm) => {
-  const [data, setData] = useState([]);
+const useTwitterProxy = (searchQuery) => {
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    if (!searchTerm) return [];
+    // If the search term is blank, skip the API request and return an empty object
+    if (!searchQuery || searchQuery.indexOf('q=&') === 0) {
+      setData({});
+      return;
+    }
+
     (async () => {
-      const response = await debounced(`/api/v1/proxy?q=${encodeURIComponent(searchTerm)}`);
+      const response = await axios.get(`/api/v1/proxy?${searchQuery}`);
       if (response) {
         setData(response.data);
       }
     })();
-  }, [searchTerm]);
+  }, [searchQuery]);
 
   return data;
 }
