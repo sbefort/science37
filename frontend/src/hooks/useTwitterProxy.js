@@ -5,8 +5,8 @@ const useTwitterProxy = (searchQuery) => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    // If the search term is blank, skip the API request and return an empty object
-    if (!searchQuery || searchQuery.indexOf('q=&') === 0) {
+    // If the search term is blank or invalid, skip the API request and return an empty object
+    if (!searchQuery || searchQuery.indexOf('q=&') === 0 || searchQuery.indexOf('q=%23&') === 0) {
       setData({});
       return;
     }
