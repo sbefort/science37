@@ -3,6 +3,7 @@ import Linkify from 'linkify-react';
 import Avatar from './Avatar';
 import H3 from './H3';
 import Chip from './Chip';
+import decodeHtml from '../utils/decodeHtml';
 
 const Tweet = ({ tweet, selectedHashtag, onHashtagClick, isEven }) => {
   return (
@@ -12,7 +13,7 @@ const Tweet = ({ tweet, selectedHashtag, onHashtagClick, isEven }) => {
       </div>
       <div>
         <H3>@{ tweet.user.screen_name}</H3>
-        <Linkify tagName="p" options={{target: '_blank'}}>{ tweet.text }</Linkify>
+        <Linkify tagName="p" options={{target: '_blank'}}>{ decodeHtml(tweet.text) }</Linkify>
         {tweet.entities.hashtags.map((hashtag) => (
           <Chip key={hashtag.text} isSelected={selectedHashtag === hashtag.text} onClick={() => onHashtagClick(hashtag.text)}>#{ hashtag.text }</Chip>)
         )}
