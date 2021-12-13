@@ -29,6 +29,13 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0 0 10px 0;
   }
 
+  a,
+  a:visited,
+  a:hover {
+    color: #367ab5;
+    text-decoration: none;
+  }
+
   @media (max-width: 800px) {
     body {
       padding: 0;
