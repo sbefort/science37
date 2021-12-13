@@ -8,12 +8,11 @@ import H1 from './H1';
 import H2 from './H2';
 import TextInputWithIcon from './TextInputWithIcon';
 import Card from './Card';
-import Tweet from './Tweet';
 import Chip from './Chip';
 import Footer from './Footer';
 import useDebounce from '../hooks/useDebounce';
 import useTwitterProxy from '../hooks/useTwitterProxy';
-import filterTweets from '../utils/filterTweets';
+import Tweets from './Tweets';
 
 // If page is loaded with '?theme=dark' appended to URL, change to dark mode.
 const params = new URLSearchParams(window.location.search);
@@ -43,6 +42,7 @@ function App() {
                                                   .map((hashtag) => hashtag.text)
                                                   .filter((value, index, self) => self.indexOf(value) === index) : [];
     setHashtags(hashtags);
+    setSelectedHashtag('');
   }, [data]);
 
   // Add or remove hashtags from the selectedHashtags filter when a hashtag is clicked
@@ -75,15 +75,13 @@ function App() {
         <Card>
           <H2>Filter by hashtag</H2>
           {hashtags && hashtags.map((hashtag) => (
-            <Chip onClick={() => onHashtagClick(hashtag)} key={hashtag}>#{ hashtag }</Chip>
+            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={hashtag}>#{ hashtag }</Chip>
           ))}
         </Card>
       </MasonryItem>
       <MasonryItem width="67%">
         <Card>
-          {data.statuses && filterTweets(data.statuses, selectedHashtag).map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
-          ))}
+          <Tweets tweets={data.statuses} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick}/>
         </Card>
       </MasonryItem>
       <Footer />
