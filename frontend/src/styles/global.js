@@ -24,6 +24,11 @@ export const GlobalStyles = createGlobalStyle`
     padding: 20px 0 40px 0;
   }
 
+  p {
+    line-height: 170%;
+    margin: 0 0 10px 0;
+  }
+
   @media (max-width: 800px) {
     body {
       padding: 0;
