@@ -10,8 +10,14 @@ app.get('/api/v1/status', (req, res) => {
 });
 
 app.get('/api/v1/proxy', (req, res) => {
-  const q = req.query.q;
-  axios.get(`https://api.twitter.com/1.1/search/tweets.json?q=${q}`, {
+  const query = [];
+  for (const q in req.query) {
+    if (req.query.hasOwnProperty(q)) {
+      query.push(`${q}=${encodeURIComponent(req.query[q])}`);
+    }
+  }
+
+  axios.get(`https://api.twitter.com/1.1/search/tweets.json?${query.join('&')}`, {
     headers: {
       Authorization: 'Bearer AAAAAAAAAAAAAAAAAAAAAI4OHgEAAAAAlbk0HSIAqcc3havrrU9j2NeAQ34%3DzJmzwHuQerd8JJ2TeuHfqwKgBt6bK4tk93w3ocBB2vPuKMF3cG',
     }
