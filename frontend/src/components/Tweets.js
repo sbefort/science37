@@ -9,6 +9,12 @@ const Tweets = ({ tweets, selectedHashtag, onHashtagClick }) => {
     );
   }
 
+  if (tweets.length === 0) {
+    return (
+      <P>Darn, no results found for that search query.</P>
+    );
+  }
+
   return (
     <>
       {filterTweets(tweets, selectedHashtag).map((tweet, i) => (
@@ -20,8 +26,8 @@ const Tweets = ({ tweets, selectedHashtag, onHashtagClick }) => {
 
 const P = styled.p`
 	text-align: center;
-  margin: 50px 0;
   font-size: 1.5em;
+  padding: 50px 0;
 `;
 
 export default Tweets;

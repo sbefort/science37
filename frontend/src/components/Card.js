@@ -7,6 +7,7 @@ const Card = ({ children, styles }) => (
 );
 
 const StyledCard = styled.div`
+  padding: 1em;
   border-top: 1px solid #dedede;
   box-shadow: 1px 2px 4px rgba(0,0,0,0.1), -1px 2px 4px rgba(0,0,0,0.1);
 `;

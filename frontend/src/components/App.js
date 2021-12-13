@@ -72,15 +72,16 @@ function App() {
         </MasonryItem>
       </header>
       <MasonryItem width="30%" floatDirection="right">
-        <Card styles={{padding: '1em'}}>
+        <Card>
           <H2>Filter by hashtag</H2>
-          {hashtags && hashtags.map((hashtag) => (
+          {hashtags.map((hashtag) => (
             <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={hashtag}>#{ hashtag }</Chip>
           ))}
+          {hashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
         </Card>
       </MasonryItem>
       <MasonryItem width="67%">
-        <Card>
+        <Card styles={{padding: '0'}}>
           <Tweets tweets={data.statuses} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick}/>
         </Card>
       </MasonryItem>
