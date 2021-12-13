@@ -1,18 +1,31 @@
 import styled from 'styled-components';
-import get from 'lodash/get';
+import Avatar from './Avatar';
+import H3 from './H3';
+import Chip from './Chip';
 
 const Tweet = ({ tweet }) => {
   console.log(tweet.user);
   return (
     <StyledTweet>
-        <h3>{get(tweet, 'user.screen_name')}</h3>
-      { tweet.text }
+      <div className="avatar">
+        <Avatar src={tweet.user.profile_image_url_https} alt={tweet.user.screen_name} />
+      </div>
+      <div>
+        <H3>@{ tweet.user.screen_name}</H3>
+        <p>{ tweet.text }</p>
+        {tweet.entities.hashtags.map((hashtag) => <Chip>{ hashtag.text }</Chip>)}
+      </div>
     </StyledTweet>
- );
+  );
 };
 
 const StyledTweet = styled.div`
-  margin-bottom: 10px;
+  padding: 20px 0;
+  display: flex;
+
+  .avatar {
+    margin-right: 15px;
+  }
 `;
 
 export default Tweet;
