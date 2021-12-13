@@ -10,6 +10,12 @@ const Chip = styled.div`
   margin-bottom: 0.7em;
   font-size: 0.8em;
   cursor: pointer;
+  transition: all 0.1s linear;
+
+  ${({ isSelected }) => isSelected && `
+    background-color: lightslategrey;
+    color: #fff;
+  `}
 `;
 
 export default Chip;
