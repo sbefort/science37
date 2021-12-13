@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import Linkify from 'linkify-react';
 import Avatar from './Avatar';
 import H3 from './H3';
 import Chip from './Chip';
 
-const Tweet = ({ tweet }) => {
-  console.log(tweet.user);
+const Tweet = ({ tweet, selectedHashtag, onHashtagClick }) => {
   return (
     <StyledTweet>
       <div className="avatar">
@@ -12,8 +12,10 @@ const Tweet = ({ tweet }) => {
       </div>
       <div>
         <H3>@{ tweet.user.screen_name}</H3>
-        <p>{ tweet.text }</p>
-        {tweet.entities.hashtags.map((hashtag) => <Chip>{ hashtag.text }</Chip>)}
+        <Linkify tagName="p" options={{target: '_blank'}}>{ tweet.text }</Linkify>
+        {tweet.entities.hashtags.map((hashtag) => (
+          <Chip isSelected={selectedHashtag === hashtag.text} onClick={() => onHashtagClick(hashtag.text)}>#{ hashtag.text }</Chip>)
+        )}
       </div>
     </StyledTweet>
   );
