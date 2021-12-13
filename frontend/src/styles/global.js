@@ -18,10 +18,10 @@ export const GlobalStyles = createGlobalStyle`
     padding 0 20px;
   }
 
-  #root-container {
+  #root{
     max-width: 1200px;
     margin: auto;
-    margin-top: 20px;
+    padding: 20px 0 40px 0;
   }
 
   @media (max-width: 800px) {
