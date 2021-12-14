@@ -20,7 +20,7 @@ const theme = params.get('theme') === 'dark' ? darkTheme : lightTheme;
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 250);
   const [searchQuery, setSearchQuery] = useState('');
   const [hashtags, setHashtags] = useState([]);
   const [selectedHashtag, setSelectedHashtag] = useState('');
@@ -81,8 +81,8 @@ function App() {
       <MasonryItem width="30%" floatDirection="right">
         <Card>
           <H2>Filter by hashtag</H2>
-          {hashtags.map((hashtag) => (
-            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={hashtag}>#{ hashtag }</Chip>
+          {hashtags.map((hashtag, i) => (
+            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={i}>#{ hashtag }</Chip>
           ))}
           {hashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
         </Card>
