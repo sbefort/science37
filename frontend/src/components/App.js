@@ -75,10 +75,8 @@ const App = () => {
       <MasonryItem width="30%" floatDirection="right">
         <Card>
           <H2>Filter by hashtag</H2>
-          {hashtags.map((hashtag, i) => (
-            // Using array index in key due to hashtags with Japanese characters being flagged as duplicate keys
-            // eslint-disable-next-line react/no-array-index-key
-            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={i}>
+          {hashtags.map((hashtag) => (
+            <Chip key={hashtag} isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)}>
               #
               { hashtag }
             </Chip>

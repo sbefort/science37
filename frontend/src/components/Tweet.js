@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Linkify from 'linkify-react';
+import uniq from 'lodash/uniq';
 import Avatar from './Avatar';
 import H3 from './H3';
 import Chip from './Chip';
@@ -18,10 +19,10 @@ const Tweet = ({
         { tweet.user.screen_name}
       </H3>
       <Linkify tagName="p" options={{ target: '_blank' }}>{ decodeHtml(tweet.text) }</Linkify>
-      {tweet.entities.hashtags.map((hashtag) => (
-        <Chip key={hashtag.text} isSelected={selectedHashtag === hashtag.text} onClick={() => onHashtagClick(hashtag.text)}>
+      {uniq(tweet.entities.hashtags.map((hashtag) => hashtag.text)).map((hashtag) => (
+        <Chip key={hashtag} isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)}>
           #
-          { hashtag.text }
+          { hashtag }
         </Chip>
       ))}
     </div>
