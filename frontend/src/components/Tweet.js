@@ -14,8 +14,8 @@ const Tweet = ({ tweet, selectedHashtag, onHashtagClick, isEven }) => {
       <div>
         <H3>@{ tweet.user.screen_name}</H3>
         <Linkify tagName="p" options={{target: '_blank'}}>{ decodeHtml(tweet.text) }</Linkify>
-        {tweet.entities.hashtags.map((hashtag, i) => (
-          <Chip key={i} isSelected={selectedHashtag === hashtag.text} onClick={() => onHashtagClick(hashtag.text)}>#{ hashtag.text }</Chip>)
+        {tweet.entities.hashtags.map((hashtag) => (
+          <Chip key={hashtag.text} isSelected={selectedHashtag === hashtag.text} onClick={() => onHashtagClick(hashtag.text)}>#{ hashtag.text }</Chip>)
         )}
       </div>
     </StyledTweet>
