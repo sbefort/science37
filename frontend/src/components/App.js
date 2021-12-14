@@ -24,6 +24,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [hashtags, setHashtags] = useState([]);
   const [selectedHashtag, setSelectedHashtag] = useState('');
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // When the debounced search term changes, update the
   // query string to be sent to the backend proxy.
@@ -34,7 +35,6 @@ function App() {
   }, [debouncedSearchTerm]);
 
   const data = useTwitterProxy(searchQuery);
-  console.log(data);
 
   useEffect(() => {
     // Map through all search results and return all unique hashtags
@@ -43,6 +43,7 @@ function App() {
                                                   .filter((value, index, self) => self.indexOf(value) === index) : [];
     setHashtags(hashtags);
     setSelectedHashtag('');
+    setIsLoadingMore(false);
   }, [data]);
 
   // Add or remove hashtags from the selectedHashtags filter when a hashtag is clicked
@@ -58,6 +59,7 @@ function App() {
   };
 
   const onLoadMoreClick = () => {
+    setIsLoadingMore(true);
     const nextResults = data.search_metadata.next_results;
     setSearchQuery(nextResults);
   }
@@ -69,7 +71,7 @@ function App() {
         <H1>Tweet Feed</H1>
         <MasonryItem width="67%">
           <TextInputWithIcon
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => { setSearchTerm(e.target.value); }}
             placeholder="Search by keyword"
             value={searchTerm}
             iconComponent={<IoSearchSharp color="#ccc" fontSize="1.5em" />}
@@ -93,6 +95,7 @@ function App() {
             onHashtagClick={onHashtagClick}
             onLoadMoreClick={onLoadMoreClick}
             hasMoreResults={data.search_metadata && data.search_metadata.has_more_results}
+            isLoadingMore={isLoadingMore}
           />
         </Card>
       </MasonryItem>
