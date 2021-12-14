@@ -10,25 +10,19 @@ import Chip from './Chip';
 import Footer from './Footer';
 import useDebounce from '../hooks/useDebounce';
 import useTwitterProxy from '../hooks/useTwitterProxy';
+import twitterProxy from '../services/twitterProxy';
 import Tweets from './Tweets';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 250);
-  const [searchQuery, setSearchQuery] = useState('');
   const [hashtags, setHashtags] = useState([]);
   const [selectedHashtag, setSelectedHashtag] = useState('');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // When the debounced search term changes, update the
   // query string to be sent to the backend proxy.
-  // This search query is different when the "Load More"
-  // button is clicked. In that case, max_id will be used.
-  useEffect(() => {
-    setSearchQuery(`?q=${encodeURIComponent(debouncedSearchTerm)}&result_type=popular&count=5`);
-  }, [debouncedSearchTerm]);
-
-  const data = useTwitterProxy(searchQuery);
+  const [data, setData] = useTwitterProxy(debouncedSearchTerm);
 
   useEffect(() => {
     // Map through all search results and return all unique hashtags
@@ -52,10 +46,15 @@ function App() {
     setSelectedHashtag(hashtag);
   };
 
-  const onLoadMoreClick = () => {
+  const onLoadMoreClick = async() => {
     setIsLoadingMore(true);
-    const nextResults = data.search_metadata.next_results;
-    setSearchQuery(nextResults);
+    const response = await twitterProxy.getNextResults(data.search_metadata.next_results);
+    const { search_metadata, statuses } = response.data;
+    setData((currentState) => ({
+      search_metadata,
+      statuses: currentState.statuses.concat(statuses)
+    }));
+    setIsLoadingMore(false);
   }
 
   return (
