@@ -30,7 +30,7 @@ function App() {
   // This search query is different when the "Load More"
   // button is clicked. In that case, max_id will be used.
   useEffect(() => {
-    setSearchQuery(`q=${encodeURIComponent(debouncedSearchTerm)}&result_type=popular&count=5`);
+    setSearchQuery(`?q=${encodeURIComponent(debouncedSearchTerm)}&result_type=popular&count=5`);
   }, [debouncedSearchTerm]);
 
   const data = useTwitterProxy(searchQuery);
@@ -57,6 +57,11 @@ function App() {
     setSelectedHashtag(hashtag);
   };
 
+  const onLoadMoreClick = () => {
+    const nextResults = data.search_metadata.next_results;
+    setSearchQuery(nextResults);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -82,7 +87,13 @@ function App() {
       </MasonryItem>
       <MasonryItem width="67%">
         <Card styles={{padding: '0'}}>
-          <Tweets tweets={data.statuses} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick}/>
+          <Tweets
+            tweets={data.statuses}
+            selectedHashtag={selectedHashtag}
+            onHashtagClick={onHashtagClick}
+            onLoadMoreClick={onLoadMoreClick}
+            hasMoreResults={data.search_metadata && data.search_metadata.has_more_results}
+          />
         </Card>
       </MasonryItem>
       <Footer />
