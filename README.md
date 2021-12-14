@@ -7,7 +7,7 @@ First, `cd` into the `backend` directory and install the backend packages:
 npm i
 ```
 
-Next, in a new terminal window, `cd` into the frontend directory and install the frontend packages:
+Next, `cd` into the frontend directory and install the frontend packages:
 
 ```
 npm i
@@ -31,9 +31,11 @@ npm run start
 
 You should see a message like `You can now view science37-frontend in the browser.`
 
+Open http://localhost:3000/ to view the app.
+
 ## Test Cases
 
-You may run all of the test cases with `npm test`. The tests are a work in progress.
+You can run a sample of test cases from the `frontend` directory with `npm test`. More tests will be developed before a panel interview demo.
 
 
 Thank you for viewing.
