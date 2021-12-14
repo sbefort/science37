@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 const defaultStyles = {
   paddingTop: '12px',
   paddingRight: '8px',
@@ -6,7 +7,9 @@ const defaultStyles = {
   paddingLeft: '8px',
 };
 
-const TextInput = ({ type = 'text', placeholder = '', onChange, value, styles }) => (
+const TextInput = ({
+  type = 'text', placeholder = '', onChange, value, styles,
+}) => (
   <StyledTextInput
     type={type}
     placeholder={placeholder}
@@ -14,7 +17,7 @@ const TextInput = ({ type = 'text', placeholder = '', onChange, value, styles })
     value={value}
     style={{
       ...defaultStyles,
-      ...styles
+      ...styles,
     }}
   />
 );

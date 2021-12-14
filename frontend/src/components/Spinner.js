@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { CgSpinner } from "react-icons/cg";
+import { CgSpinner } from 'react-icons/cg';
 
 const Spinner = () => (
   <StyledSpinner>
     <CgSpinner className="spin" />
   </StyledSpinner>
-  
 );
 
 const StyledSpinner = styled.div`

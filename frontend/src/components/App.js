@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { GlobalStyles } from '../styles/global';
-import { IoSearchSharp } from "react-icons/io5";
+import { IoSearchSharp } from 'react-icons/io5';
+import GlobalStyles from '../styles/global';
 import MasonryItem from './MasonryItem';
 import H1 from './H1';
 import H2 from './H2';
@@ -13,7 +13,7 @@ import useTwitterProxy from '../hooks/useTwitterProxy';
 import twitterProxy from '../services/twitterProxy';
 import Tweets from './Tweets';
 
-function App() {
+const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 250);
   const [hashtags, setHashtags] = useState([]);
@@ -26,10 +26,11 @@ function App() {
 
   useEffect(() => {
     // Map through all search results and return all unique hashtags
-    const hashtags = data.statuses ? data.statuses.map((status) => status.entities.hashtags).flat()
-                                                  .map((hashtag) => hashtag.text)
-                                                  .filter((value, index, self) => self.indexOf(value) === index) : [];
-    setHashtags(hashtags);
+    const uniqueHashtags = data.statuses ? data.statuses.map((status) => status.entities.hashtags).flat()
+      .map((hashtag) => hashtag.text)
+      .filter((value, index, self) => self.indexOf(value) === index) : [];
+
+    setHashtags(uniqueHashtags);
     setSelectedHashtag('');
     setIsLoadingMore(false);
   }, [data]);
@@ -46,16 +47,16 @@ function App() {
     setSelectedHashtag(hashtag);
   };
 
-  const onLoadMoreClick = async() => {
+  const onLoadMoreClick = async () => {
     setIsLoadingMore(true);
     const response = await twitterProxy.getNextResults(data.search_metadata.next_results);
     const { search_metadata, statuses } = response.data;
     setData((currentState) => ({
       search_metadata,
-      statuses: currentState.statuses.concat(statuses)
+      statuses: currentState.statuses.concat(statuses),
     }));
     setIsLoadingMore(false);
-  }
+  };
 
   return (
     <>
@@ -75,13 +76,18 @@ function App() {
         <Card>
           <H2>Filter by hashtag</H2>
           {hashtags.map((hashtag, i) => (
-            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={i}>#{ hashtag }</Chip>
+            // Using array index in key due to hashtags with Japanese characters being flagged as duplicate keys
+            // eslint-disable-next-line react/no-array-index-key
+            <Chip isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)} key={i}>
+              #
+              { hashtag }
+            </Chip>
           ))}
           {hashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
         </Card>
       </MasonryItem>
       <MasonryItem width="67%">
-        <Card styles={{padding: '0'}}>
+        <Card styles={{ padding: '0' }}>
           <Tweets
             tweets={data.statuses}
             selectedHashtag={selectedHashtag}
@@ -95,6 +101,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

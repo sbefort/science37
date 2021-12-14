@@ -2,7 +2,6 @@
 // sections that collapse in the order desired. One challenge with a flex or grid layout
 // is that a right sidebar will collapse to the bottom of the page. With this layout,
 // a right sidebar can be floated to the right and collapse above the main content.
-
 import styled from 'styled-components';
 
 const defaultStyles = {
@@ -13,23 +12,28 @@ const defaultStyles = {
 };
 
 const Pane = styled.section`
-	float: ${props => props.floatDirection};
-	width: ${props => props.width};
+  float: ${(props) => props.floatDirection};
+  width: ${(props) => props.width};
 
-  @media (max-width: ${props => props.breakpoint}px) {
+  @media (max-width: ${(props) => props.breakpoint}px) {
     width: 100%;
   }
 `;
 
-const MasonryItem = ({ floatDirection = 'left', width = '100%', breakpoint = 800, children, styles }) => {
-return (
-    <Pane floatDirection={floatDirection} width={width} breakpoint={breakpoint} style={{
+const MasonryItem = ({
+  floatDirection = 'left', width = '100%', breakpoint = 800, children, styles,
+}) => (
+  <Pane
+    floatDirection={floatDirection}
+    width={width}
+    breakpoint={breakpoint}
+    style={{
       ...defaultStyles,
-      ...styles
-    }}>
-      {children}
-    </Pane>
-	);
-};
+      ...styles,
+    }}
+  >
+    {children}
+  </Pane>
+);
 
 export default MasonryItem;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Avatar = ({ src, alt = "" }) => (
+const Avatar = ({ src, alt = '' }) => (
   <StyledAvatar src={src} alt={alt} />
 );
 
