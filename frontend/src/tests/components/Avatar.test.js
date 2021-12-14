@@ -1,8 +1,11 @@
+// Work in progress...
+// Will update tests for panel interview
+
 import React from 'react';
 import { shallow } from 'enzyme';
 import Avatar from '../../components/Avatar';
 
-describe('Avatar.jsx', () => {
+describe('Avatar.js', () => {
   let wrapper;
 
   beforeEach(() => {

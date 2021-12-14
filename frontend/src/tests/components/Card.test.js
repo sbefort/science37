@@ -1,8 +1,11 @@
+// Work in progress...
+// Will update tests for panel interview
+
 import React from 'react';
 import { mount } from 'enzyme';
 import Card from '../../components/Card';
 
-describe('Avatar.jsx', () => {
+describe('Avatar.js', () => {
   let wrapper;
 
   beforeEach(() => {
