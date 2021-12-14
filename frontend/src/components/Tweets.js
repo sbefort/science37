@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import Tweet from './Tweet';
 import Button from './Button';
+import Spinner from './Spinner';
 import filterTweets from '../utils/filterTweets';
 
-const Tweets = ({ tweets, selectedHashtag, onHashtagClick, onLoadMoreClick, hasMoreResults }) => {
+const Tweets = ({ tweets, selectedHashtag, onHashtagClick, onLoadMoreClick, hasMoreResults, isLoadingMore }) => {
   if (!tweets) {
     return (
       <P>Try searching to find some tweets!</P>
@@ -19,9 +20,9 @@ const Tweets = ({ tweets, selectedHashtag, onHashtagClick, onLoadMoreClick, hasM
   const loadMore = () => {
     if (hasMoreResults) {
       return (
-        <LoadMore>
-          <Button onClick={onLoadMoreClick}>Load more</Button>
-        </LoadMore>
+        <CenterWithPadding>
+          {isLoadingMore ? <Spinner /> : <Button onClick={onLoadMoreClick}>Load more</Button>}
+        </CenterWithPadding>
       )
     }
     return null;
@@ -30,7 +31,7 @@ const Tweets = ({ tweets, selectedHashtag, onHashtagClick, onLoadMoreClick, hasM
   return (
     <>
       {filterTweets(tweets, selectedHashtag).map((tweet, i) => (
-        <Tweet isEven={i % 2 === 0} key={tweet.id} tweet={tweet} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick} />
+        <Tweet isEven={i % 2 === 0} key={tweet.id_str} tweet={tweet} selectedHashtag={selectedHashtag} onHashtagClick={onHashtagClick} />
       ))}
 
       { loadMore() }
@@ -44,7 +45,7 @@ const P = styled.p`
   padding: 50px 0;
 `;
 
-const LoadMore = styled.div`
+const CenterWithPadding = styled.div`
 	text-align: center;
   padding: 40px 0;
 `;
