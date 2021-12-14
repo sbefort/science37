@@ -11,4 +11,6 @@ const StyledAvatar = styled.img`
   border-radius: 50%;
 `;
 
+StyledAvatar.displayName = 'img';
+
 export default Avatar;
