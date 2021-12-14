@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from '../styles/theme';
 import { GlobalStyles } from '../styles/global';
 import { IoSearchSharp } from "react-icons/io5";
 import MasonryItem from './MasonryItem';
@@ -13,10 +11,6 @@ import Footer from './Footer';
 import useDebounce from '../hooks/useDebounce';
 import useTwitterProxy from '../hooks/useTwitterProxy';
 import Tweets from './Tweets';
-
-// If page is loaded with '?theme=dark' appended to URL, change to dark mode.
-const params = new URLSearchParams(window.location.search);
-const theme = params.get('theme') === 'dark' ? darkTheme : lightTheme;
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -65,7 +59,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GlobalStyles />
       <header>
         <H1>Tweet Feed</H1>
@@ -100,7 +94,7 @@ function App() {
         </Card>
       </MasonryItem>
       <Footer />
-    </ThemeProvider>
+    </>
   );
 }
 
