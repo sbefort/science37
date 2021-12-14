@@ -11,9 +11,11 @@ const useTwitterProxy = (searchQuery) => {
       return;
     }
 
-    // When NOT loading next page of results for the same search term, reset the data object
-    if (!searchQuery.indexOf('?max_id=') === 0) {
-      setData({});
+    // If max_id is present in query string, this is a pagination call with the same search term,
+    // so concatenate new results with previous results.
+    let shouldConcat = true;
+    if (searchQuery.indexOf('?max_id=') === -1) {
+      shouldConcat = false;
     }
 
     (async () => {
@@ -22,7 +24,7 @@ const useTwitterProxy = (searchQuery) => {
         const { search_metadata, statuses } = response.data;
         setData((currentState) => ({
           search_metadata,
-          statuses: currentState.statuses ? currentState.statuses.concat(statuses) : statuses
+          statuses: currentState.statuses && shouldConcat ? currentState.statuses.concat(statuses) : statuses
         }));
       }
     })();
