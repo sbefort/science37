@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background: '#f8f9f9';
+    background: #f8f9f9;
     color: #334750;
     transition: all 0.25s linear;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
