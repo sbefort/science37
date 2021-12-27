@@ -6,7 +6,7 @@ const Chip = styled.div`
   border-radius: 1.5em;
   display: inline-block;
   padding: 0.8em 1.2em;
-  margin: 0.2em 0.7em 0.7em 0;
+  margin: 0.4em 0.4em;
   font-size: 0.8em;
   cursor: pointer;
   transition: all 0.1s linear;
