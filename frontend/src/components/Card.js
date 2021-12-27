@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Card = ({ children, styles }) => (
-  <StyledCard style={{ ...styles }}>
+  <StyledCard style={styles}>
     { children }
   </StyledCard>
 );
