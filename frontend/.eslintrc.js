@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -19,7 +20,8 @@ module.exports = {
   ],
   ignorePatterns: ['**/tests/**/*.js', 'setupTests.js'],
   rules: {
-    'max-len': ['error', { code: 150 }],
+    'max-len': ['error', { code: 170 }],
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     camelcase: 0,
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'react/jsx-filename-extension': 0,
