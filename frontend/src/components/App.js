@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import GlobalStyles from '../styles/global';
 import MasonryItem from './MasonryItem';
@@ -6,57 +6,63 @@ import H1 from './H1';
 import H2 from './H2';
 import TextInputWithIcon from './TextInputWithIcon';
 import Card from './Card';
+import Chips from './Chips';
 import Chip from './Chip';
 import Footer from './Footer';
-import useDebounce from '../hooks/useDebounce';
-import useTwitterProxy from '../hooks/useTwitterProxy';
+import useDebouncedEffect from '../hooks/useDebouncedEffect';
 import twitterProxy from '../services/twitterProxy';
 import Tweets from './Tweets';
+import { ACTIONS, TwitterContext } from '../context/twitterContext';
 
 const App = () => {
+  const [state, dispatch] = useContext(TwitterContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 250);
-  const [hashtags, setHashtags] = useState([]);
-  const [selectedHashtag, setSelectedHashtag] = useState('');
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // When the debounced search term changes, update the
-  // query string to be sent to the backend proxy.
-  const [data, setData] = useTwitterProxy(debouncedSearchTerm);
+  const onSearchTermChange = (e) => {
+    dispatch({ type: ACTIONS.RESET_STATE });
+    dispatch({ type: ACTIONS.SET_IS_LOADING, payload: true });
+    setSearchTerm(e.target.value);
+  };
+  const setIsLoading = (bool) => dispatch({ type: ACTIONS.SET_IS_LOADING, payload: bool });
+  const setTweets = (data) => dispatch({ type: ACTIONS.SET_TWEETS, payload: data });
+  const setNextResults = (data) => dispatch({ type: ACTIONS.SET_NEXT_RESULTS, payload: data });
+  const setUniqueHashtags = () => dispatch({ type: ACTIONS.SET_UNIQUE_HASHTAGS });
+  const setSelectedHashtags = (hashtag) => dispatch({ type: ACTIONS.SET_SELECTED_HASHTAGS, payload: hashtag });
+  const filterTweets = () => dispatch({ type: ACTIONS.FILTER_TWEETS });
+  const resetState = () => dispatch({ type: ACTIONS.RESET_STATE });
 
-  useEffect(() => {
-    // Map through all search results and return all unique hashtags
-    const uniqueHashtags = data.statuses ? data.statuses.map((status) => status.entities.hashtags).flat()
-      .map((hashtag) => hashtag.text)
-      .filter((value, index, self) => self.indexOf(value) === index) : [];
+  // Debounced call to backend proxy when search term changes
+  useDebouncedEffect(async () => {
+    if (!searchTerm) return;
 
-    setHashtags(uniqueHashtags);
-    setSelectedHashtag('');
-    setIsLoadingMore(false);
-  }, [data]);
-
-  // Add or remove hashtags from the selectedHashtags filter when a hashtag is clicked
-  const onHashtagClick = (hashtag) => {
-    // If the hashtag is already selected, reset the filter
-    if (hashtag === selectedHashtag) {
-      setSelectedHashtag('');
-      return;
+    try {
+      setIsLoading(true);
+      const response = await twitterProxy.search(searchTerm);
+      setTweets(response.data.tweets);
+      setNextResults(response.data.nextResults);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
+  }, [searchTerm], 2000);
 
-    // If the hashtag was not already selected, and the hashtag was clicked, add it to the array
-    setSelectedHashtag(hashtag);
-  };
+  // Always reset state when search term is empty (no debounce)
+  useEffect(() => {
+    if (!searchTerm) {
+      resetState();
+    }
+  }, [searchTerm]);
 
-  const onLoadMoreClick = async () => {
-    setIsLoadingMore(true);
-    const response = await twitterProxy.getNextResults(data.search_metadata.next_results);
-    const { search_metadata, statuses } = response.data;
-    setData((currentState) => ({
-      search_metadata,
-      statuses: currentState.statuses.concat(statuses),
-    }));
-    setIsLoadingMore(false);
-  };
+  // Update the unique list of hashtags whenever the list of tweets changes
+  useEffect(() => {
+    setUniqueHashtags();
+  }, [state.tweets]);
+
+  // Update tweet filter whenever a user toggles a hashtag
+  useEffect(() => {
+    filterTweets();
+  }, [state.selectedHashtags]);
 
   return (
     <>
@@ -65,9 +71,9 @@ const App = () => {
         <H1>Tweet Feed</H1>
         <MasonryItem width="67%">
           <TextInputWithIcon
-            onChange={(e) => { setSearchTerm(e.target.value); }}
+            onChange={onSearchTermChange}
             placeholder="Search by keyword"
-            value={searchTerm}
+            value={state.searchTerm}
             iconComponent={<IoSearchSharp color="#ccc" fontSize="1.5em" />}
           />
         </MasonryItem>
@@ -75,25 +81,20 @@ const App = () => {
       <MasonryItem width="30%" floatDirection="right">
         <Card>
           <H2>Filter by hashtag</H2>
-          {hashtags.map((hashtag) => (
-            <Chip key={hashtag} isSelected={selectedHashtag === hashtag} onClick={() => onHashtagClick(hashtag)}>
-              #
-              { hashtag }
-            </Chip>
-          ))}
-          {hashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
+          <Chips>
+            {state.uniqueHashtags.map((hashtag) => (
+              <Chip role="button" key={hashtag} isSelected={state.selectedHashtags.includes(hashtag)} onClick={() => setSelectedHashtags(hashtag)}>
+                #
+                { hashtag }
+              </Chip>
+            ))}
+          </Chips>
+          {state.uniqueHashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
         </Card>
       </MasonryItem>
       <MasonryItem width="67%">
-        <Card styles={{ padding: '0' }}>
-          <Tweets
-            tweets={data.statuses}
-            selectedHashtag={selectedHashtag}
-            onHashtagClick={onHashtagClick}
-            onLoadMoreClick={onLoadMoreClick}
-            hasMoreResults={data.search_metadata && data.search_metadata.has_more_results}
-            isLoadingMore={isLoadingMore}
-          />
+        <Card styles={{ padding: 0 }}>
+          <Tweets />
         </Card>
       </MasonryItem>
       <Footer />
