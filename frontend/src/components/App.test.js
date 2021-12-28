@@ -32,6 +32,7 @@ const server = setupServer(
             },
           ],
           nextResults: '?max_id=1474698938800386049&q=cats&count=5&include_entities=1&result_type=popular',
+          searchTerm: 'cats',
         }))
       );
     }
@@ -59,6 +60,7 @@ const server = setupServer(
             hashtags: ['catecoin', 'nft', 'gamefi', 'defi'],
           },
         ],
+        searchTerm: 'cats',
       }))
     );
   }),
