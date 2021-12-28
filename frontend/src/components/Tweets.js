@@ -11,6 +11,7 @@ const Tweets = () => {
 
   const setIsLoading = (bool) => dispatch({ type: ACTIONS.SET_IS_LOADING, payload: bool });
   const setTweets = (data) => dispatch({ type: ACTIONS.SET_TWEETS, payload: data });
+  const filterTweets = () => dispatch({ type: ACTIONS.FILTER_TWEETS });
   const setNextResults = (data) => dispatch({ type: ACTIONS.SET_NEXT_RESULTS, payload: data });
 
   const onLoadMoreClick = async () => {
@@ -18,6 +19,7 @@ const Tweets = () => {
       setIsLoading(true);
       const response = await twitterProxy.getNextResults(state.nextResults);
       setTweets(response.data.tweets);
+      filterTweets();
       setNextResults(response.data.nextResults);
     } catch (err) {
       console.error(err);
