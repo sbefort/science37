@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import Linkify from 'linkify-react';
-import Avatar from './styled/Avatar';
-import H3 from './styled/H3';
-import Chips from './styled/Chips';
-import Chip from './styled/Chip';
+import Avatar from './stateless/Avatar';
+import H3 from './stateless/H3';
+import Chips from './stateless/Chips';
+import Chip from './stateless/Chip';
 import decodeHtml from '../utils/decodeHtml';
 import { ACTIONS, TwitterContext } from '../context/twitterContext';
 

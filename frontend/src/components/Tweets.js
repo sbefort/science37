@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import Tweet from './Tweet';
-import Button from './styled/Button';
-import Spinner from './styled/Spinner';
+import Button from './stateless/Button';
+import Spinner from './stateless/Spinner';
 import { ACTIONS, TwitterContext } from '../context/twitterContext';
 import twitterProxy from '../services/twitterProxy';
 
