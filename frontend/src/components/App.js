@@ -38,8 +38,13 @@ const App = () => {
     try {
       setIsLoading(true);
       const response = await twitterProxy.search(searchTerm);
-      setTweets(response.data.tweets);
-      setNextResults(response.data.nextResults);
+      // In the case of multiple async requests happening concurrently,
+      // make sure the current client search term matches the search term in the response
+      // before updating the search results with stale data.
+      if (response.data.searchTerm === searchTerm) {
+        setTweets(response.data.tweets);
+        setNextResults(response.data.nextResults);
+      }
     } catch (err) {
       console.error(err);
     } finally {

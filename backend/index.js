@@ -53,6 +53,7 @@ app.listen(3001, () =>
 
 const massageTwitterResponse = (response) => {
   const data = {};
+  data.searchTerm = response.data.search_metadata.query;
   data.tweets = response.data.statuses.map((status) => {
     const { id_str: id, text, user } = status;
     const hashtags = status.entities.hashtags.map((hashtag) => hashtag.text);
@@ -64,7 +65,7 @@ const massageTwitterResponse = (response) => {
       user: {
         username: user.screen_name,
         avatarUrl: user.profile_image_url_https,
-      }
+      },
     });
   });
 
