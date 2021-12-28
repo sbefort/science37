@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import Linkify from 'linkify-react';
-import Avatar from './Avatar';
-import H3 from './H3';
-import Chip from './Chip';
+import Avatar from './styled/Avatar';
+import H3 from './styled/H3';
+import Chips from './styled/Chips';
+import Chip from './styled/Chip';
 import decodeHtml from '../utils/decodeHtml';
 import { ACTIONS, TwitterContext } from '../context/twitterContext';
 
@@ -23,12 +24,14 @@ const Tweet = ({
           { tweet.user.username}
         </H3>
         <Linkify tagName="p" options={{ target: '_blank' }}>{ decodeHtml(tweet.text) }</Linkify>
-        {uniqueHashtags.map((hashtag) => (
-          <Chip key={hashtag} isSelected={state.selectedHashtags.includes(hashtag)} onClick={() => dispatch({ type: ACTIONS.SET_SELECTED_HASHTAGS, payload: hashtag })}>
-            #
-            { hashtag }
-          </Chip>
-        ))}
+        <Chips>
+          {uniqueHashtags.map((hashtag) => (
+            <Chip key={hashtag} isSelected={state.selectedHashtags.includes(hashtag)} onClick={() => dispatch({ type: ACTIONS.SET_SELECTED_HASHTAGS, payload: hashtag })}>
+              #
+              { hashtag }
+            </Chip>
+          ))}
+        </Chips>
       </div>
     </StyledTweet>
   );

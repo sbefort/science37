@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import GlobalStyles from '../styles/global';
 import MasonryItem from './MasonryItem';
-import H1 from './H1';
-import H2 from './H2';
+import H1 from './styled/H1';
+import H2 from './styled/H2';
 import TextInputWithIcon from './TextInputWithIcon';
-import Card from './Card';
-import Chips from './Chips';
-import Chip from './Chip';
-import Footer from './Footer';
+import Card from './styled/Card';
+import Chips from './styled/Chips';
+import Chip from './styled/Chip';
+import Footer from './styled/Footer';
 import useDebouncedEffect from '../hooks/useDebouncedEffect';
 import twitterProxy from '../services/twitterProxy';
 import Tweets from './Tweets';
@@ -45,7 +45,7 @@ const App = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [searchTerm], 2000);
+  }, [searchTerm], 250);
 
   // Always reset state when search term is empty (no debounce)
   useEffect(() => {
