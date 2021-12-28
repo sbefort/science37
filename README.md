@@ -35,7 +35,7 @@ Open http://localhost:3000/ to view the app.
 
 ## Test Cases
 
-You can run a sample of test cases from the `frontend` directory with `npm test`. More tests will be developed before a panel interview demo.
+You can run test cases from the `frontend` directory with `npm run test`.
 
 
 Thank you for viewing.
