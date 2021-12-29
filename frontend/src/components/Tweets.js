@@ -64,7 +64,7 @@ const Tweets = () => {
 
 const P = styled.p`
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   padding: 50px 0;
 `;
 

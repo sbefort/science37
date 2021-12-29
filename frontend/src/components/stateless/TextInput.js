@@ -26,7 +26,7 @@ const StyledTextInput = styled.input`
   border-radius: 5px;
   border: 1px solid #bcc2c5;
   width: 100%;
-  font-size: 0.9em;
+  font-size: 0.9rem;
 
   :focus-visible {
     outline: none;
