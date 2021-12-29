@@ -38,7 +38,7 @@ const Tweet = ({
 };
 
 const StyledTweet = styled.div`
-  padding: 20px 12px 12px 15px;
+  padding: 1rem 0.3rem 1rem 0.7rem;
   display: flex;
   background-color: ${(props) => (props.isEven ? '#fff' : '#f8f9f9')};
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import GlobalStyles from '../styles/global';
-import MasonryItem from './MasonryItem';
 import H1 from './stateless/H1';
 import H2 from './stateless/H2';
 import TextInputWithIcon from './stateless/TextInputWithIcon';
@@ -74,34 +73,36 @@ const App = () => {
       <GlobalStyles />
       <header>
         <H1>Tweet Feed</H1>
-        <MasonryItem width="67%">
+      </header>
+      <main id="grid">
+        <div id="search-box">
           <TextInputWithIcon
             onChange={onSearchTermChange}
             placeholder="Search by keyword"
             value={state.searchTerm}
             iconComponent={<IoSearchSharp color="#ccc" fontSize="1.5em" />}
           />
-        </MasonryItem>
-      </header>
-      <MasonryItem width="30%" floatDirection="right">
-        <Card>
-          <H2>Filter by hashtag</H2>
-          <Chips>
-            {state.uniqueHashtags.map((hashtag) => (
-              <Chip role="button" key={hashtag} isSelected={state.selectedHashtags.includes(hashtag)} onClick={() => setSelectedHashtags(hashtag)}>
-                #
-                { hashtag }
-              </Chip>
-            ))}
-          </Chips>
-          {state.uniqueHashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
-        </Card>
-      </MasonryItem>
-      <MasonryItem width="67%">
-        <Card styles={{ padding: 0 }}>
-          <Tweets />
-        </Card>
-      </MasonryItem>
+        </div>
+        <aside id="hashtag-filter">
+          <Card>
+            <H2>Filter by hashtag</H2>
+            <Chips>
+              {state.uniqueHashtags.map((hashtag) => (
+                <Chip role="button" key={hashtag} isSelected={state.selectedHashtags.includes(hashtag)} onClick={() => setSelectedHashtags(hashtag)}>
+                  #
+                  { hashtag }
+                </Chip>
+              ))}
+            </Chips>
+            {state.uniqueHashtags.length === 0 && <p>No hashtags found, maybe try another search term?</p>}
+          </Card>
+        </aside>
+        <div id="tweet-list">
+          <Card styles={{ padding: 0 }}>
+            <Tweets />
+          </Card>
+        </div>
+      </main>
       <Footer />
     </>
   );

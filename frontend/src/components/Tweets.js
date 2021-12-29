@@ -64,13 +64,13 @@ const Tweets = () => {
 
 const P = styled.p`
   text-align: center;
-  font-size: 1.5rem;
-  padding: 50px 0;
+  font-size: 1.3rem;
+  padding: 3rem 1rem;
 `;
 
 const CenterWithPadding = styled.div`
   text-align: center;
-  padding: 40px 0;
+  padding: 2rem 0;
 `;
 
 export default Tweets;
